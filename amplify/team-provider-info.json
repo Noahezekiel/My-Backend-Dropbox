@@ -14,6 +14,15 @@
     "categories": {
       "auth": {
         "mybackenddropboxac16c327": {}
+      },
+      "function": {
+        "S3Triggerbd4e1495": {
+          "deploymentBucketName": "amplify-mybackenddropbox-dev-3deba-deployment",
+          "s3Key": "amplify-builds/S3Triggerbd4e1495-48463837494b6c61446f-build.zip"
+        }
+      },
+      "storage": {
+        "userFilesBucket": {}
       }
     }
   }
