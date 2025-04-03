@@ -1,6 +1,7 @@
 // App.js
 import React, { useEffect, useState } from "react";
-import { Amplify, Storage } from "aws-amplify";
+import { Amplify } from 'aws-amplify';
+import { getUrl, uploadData, remove, list } from '@aws-amplify/storage'; // Updated imports
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import awsconfig from "./aws-exports";
 import { FiUpload, FiDownload } from "react-icons/fi";
@@ -19,8 +20,11 @@ const App = ({ signOut, user }) => {
 
   const fetchFiles = async () => {
     try {
-      const fileList = await Storage.list("");
-      setFiles(fileList);
+      const { items } = await list({ 
+        path: '', 
+        options: { accessLevel: 'guest' } // or 'private' depending on your config
+      });
+      setFiles(items);
     } catch (error) {
       console.error("Error fetching files:", error);
     }
@@ -29,8 +33,13 @@ const App = ({ signOut, user }) => {
   const uploadFile = async () => {
     if (!selectedFile) return;
     try {
-      await Storage.put(selectedFile.name, selectedFile, {
-        contentType: selectedFile.type,
+      await uploadData({
+        key: selectedFile.name,
+        data: selectedFile,
+        options: {
+          accessLevel: 'guest', // or 'private'
+          contentType: selectedFile.type
+        }
       });
       fetchFiles();
     } catch (error) {
@@ -40,13 +49,17 @@ const App = ({ signOut, user }) => {
 
   const downloadFile = async (fileKey) => {
     try {
-      const url = await Storage.get(fileKey);
+      const { url } = await getUrl({ 
+        key: fileKey,
+        options: { accessLevel: 'guest' }
+      });
       window.open(url);
     } catch (error) {
       console.error("Error downloading file:", error);
     }
   };
 
+  // The rest of your component remains the same
   return (
     <div className="app-container">
       <Sidebar user={user} signOut={signOut} />

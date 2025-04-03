@@ -18,3 +18,5 @@ const Sidebar = ({ user, signOut }) => {
     </div>
   );
 };
+
+export default Sidebar;
