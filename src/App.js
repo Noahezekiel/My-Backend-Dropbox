@@ -5,6 +5,7 @@ import { getUrl, uploadData, list } from 'aws-amplify/storage';
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import awsconfig from "./aws-exports";
 import { FiUpload, FiDownload } from "react-icons/fi";
+import NavBar from "./components/NavBar"; // ✅ Ensure this is used
 import Sidebar from "./components/Sidebar";
 import "./App.css";
 
@@ -62,30 +63,35 @@ const App = ({ user }) => {
   };
 
   return (
-    <div className="app-container">
-      <Sidebar user={user} signOut={signOut} />
-      <div className="main-content">
-        <h1>Welcome, {userName}</h1>
-        <div className="upload-section">
-          <input type="file" onChange={(e) => setSelectedFile(e.target.files[0])} />
-          <button className="upload-btn" onClick={uploadFile}>
-            <FiUpload /> Upload
-          </button>
+    <div>
+      <NavBar />
+      <div className="app-container">
+        <Sidebar user={user} signOut={signOut} />
+        <div className="main-content">
+          <h1>Welcome, {userName}</h1>
+          <div className="upload-section">
+            <input type="file" onChange={(e) => setSelectedFile(e.target.files[0])} />
+            <button className="upload-btn" onClick={uploadFile}>
+              <FiUpload /> Upload
+            </button>
+          </div>
+          <h2>Uploaded Files</h2>
+          <ul className="file-list">
+            {files.map((file) => (
+              <li key={file.key} className="file-item">
+                {file.key} 
+                <button className="download-btn" onClick={() => downloadFile(file.key)}>
+                  <FiDownload /> Download
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
-        <h2>Uploaded Files</h2>
-        <ul className="file-list">
-          {files.map((file) => (
-            <li key={file.key} className="file-item">
-              {file.key} 
-              <button className="download-btn" onClick={() => downloadFile(file.key)}>
-                <FiDownload /> Download
-              </button>
-            </li>
-          ))}
-        </ul>
       </div>
     </div>
   );
 };
 
-export default withAuthenticator(App, { signUpAttributes: ['name', 'email', 'password'] });
+const AuthenticatedApp = withAuthenticator(App, { signUpAttributes: ['name', 'email', 'password'] });
+
+export default AuthenticatedApp;
