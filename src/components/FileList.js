@@ -117,7 +117,6 @@ function FileList({ refreshTrigger, currentPath, onNavigate }) {
           </span>
         ))}
       </div>
-
       <table>
         <thead>
           <tr>
