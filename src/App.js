@@ -1,200 +1,121 @@
-// import React, { useEffect, useState } from "react";
-// import { Amplify } from 'aws-amplify';
-// import { getUrl, uploadData, list } from '@aws-amplify/storage';
-// import { withAuthenticator } from "@aws-amplify/ui-react";
-// import awsconfig from "./aws-exports";
-// import { FiUpload, FiDownload } from "react-icons/fi";
-// import Sidebar from "./components/Sidebar";
-// import "./App.css";
+import React, { useState } from 'react';
+import { withAuthenticator } from '@aws-amplify/ui-react';
+import { signOut } from '@aws-amplify/auth';
+import FileUpload from './components/FileUpload';
+import FileList from './components/FileList';
+import Profile from './components/Profile';
+import Sidebar from './components/Sidebar';
+import './App.css';
 
-// Amplify.configure(awsconfig);
+function App() {
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const [currentPath, setCurrentPath] = useState('public/');
+  const [view, setView] = useState('files');
 
-// const App = ({ signOut, user }) => {
-//   const [files, setFiles] = useState([]);
-//   const [selectedFile, setSelectedFile] = useState(null);
-
-//   useEffect(() => {
-//     fetchFiles();
-//   }, []);
-
-//   const fetchFiles = async () => {
-//     try {
-//       const { items } = await list({ 
-//         path: '', 
-//         options: { accessLevel: 'guest' }
-//       });
-//       setFiles(items);
-//     } catch (error) {
-//       console.error("Error fetching files:", error);
-//     }
-//   };
-
-//   const uploadFile = async () => {
-//     if (!selectedFile) return;
-//     try {
-//       await uploadData({
-//         key: selectedFile.name,
-//         data: selectedFile,
-//         options: {
-//           accessLevel: 'guest',
-//           contentType: selectedFile.type
-//         }
-//       });
-//       fetchFiles();
-//     } catch (error) {
-//       console.error("Error uploading file:", error);
-//     }
-//   };
-
-//   const downloadFile = async (fileKey) => {
-//     try {
-//       const { url } = await getUrl({ 
-//         key: fileKey,
-//         options: { accessLevel: 'guest' }
-//       });
-//       window.open(url);
-//     } catch (error) {
-//       console.error("Error downloading file:", error);
-//     }
-//   };
-
-//   return (
-//     <div className="app-container">
-//       <Sidebar user={user} signOut={signOut} />
-//       <div className="main-content">
-//         <h1>Welcome, {user.attributes?.name || user.username}</h1>
-//         <div className="upload-section">
-//           <input
-//             type="file"
-//             onChange={(e) => setSelectedFile(e.target.files[0])}
-//           />
-//           <button className="upload-btn" onClick={uploadFile}>
-//             <FiUpload /> Upload
-//           </button>
-//         </div>
-//         <h2>Uploaded Files</h2>
-//         <ul className="file-list">
-//           {files.map((file) => (
-//             <li key={file.key} className="file-item">
-//               {file.key} 
-//               <button className="download-btn" onClick={() => downloadFile(file.key)}>
-//                 <FiDownload /> Download
-//               </button>
-//             </li>
-//           ))}
-//         </ul>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default withAuthenticator(App, {
-//   signUpAttributes: ['name', 'email', 'password']
-// });
-
-
-import React, { useEffect, useState } from "react";
-import { Amplify } from 'aws-amplify';
-import { Auth } from '@aws-amplify/auth';
-import { getUrl, uploadData, list } from '@aws-amplify/storage';
-import { withAuthenticator } from "@aws-amplify/ui-react";
-import awsconfig from "./aws-exports";
-import { FiUpload, FiDownload } from "react-icons/fi";
-import Sidebar from "./components/Sidebar";
-import "./App.css";
-
-Amplify.configure(awsconfig);
-
-const App = ({ signOut, user }) => {
-  const [files, setFiles] = useState([]);
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [userName, setUserName] = useState("");
-
-  useEffect(() => {
-    fetchFiles();
-    fetchUser();
-  }, []);
-
-  const fetchUser = async () => {
-    try {
-      const currentUser = await Auth.currentAuthenticatedUser();
-      setUserName(currentUser.attributes?.name || user.username);
-    } catch (error) {
-      console.error("Error fetching user:", error);
-    }
+  const handleUploadComplete = () => {
+    setRefreshTrigger(prev => prev + 1);
   };
 
-  const fetchFiles = async () => {
-    try {
-      const { items } = await list({ 
-        path: '', 
-        options: { accessLevel: 'guest' }
-      });
-      setFiles(items);
-    } catch (error) {
-      console.error("Error fetching files:", error);
-    }
+  const handleNavigate = (path) => {
+    console.log('Navigating to:', path);
+    setCurrentPath(path);
+    setRefreshTrigger(prev => prev + 1);
   };
 
-  const uploadFile = async () => {
-    if (!selectedFile) return;
+  const handleSignOut = async () => {
     try {
-      await uploadData({
-        key: selectedFile.name,
-        data: selectedFile,
-        options: {
-          accessLevel: 'guest',
-          contentType: selectedFile.type
-        }
-      });
-      fetchFiles();
+      await signOut();
     } catch (error) {
-      console.error("Error uploading file:", error);
-    }
-  };
-
-  const downloadFile = async (fileKey) => {
-    try {
-      const { url } = await getUrl({ 
-        key: fileKey,
-        options: { accessLevel: 'guest' }
-      });
-      window.open(url);
-    } catch (error) {
-      console.error("Error downloading file:", error);
+      console.error('Error signing out:', error);
     }
   };
 
   return (
-    <div className="app-container">
-      <Sidebar user={user} signOut={signOut} />
+    <div className="app">
+      <Sidebar currentView={view} setView={setView} />
       <div className="main-content">
-        <h1>Welcome, {userName}</h1>
-        <div className="upload-section">
-          <input
-            type="file"
-            onChange={(e) => setSelectedFile(e.target.files[0])}
-          />
-          <button className="upload-btn" onClick={uploadFile}>
-            <FiUpload /> Upload
+        <header className="app-header">
+          <h1>{view === 'files' ? 'Files' : 'Profile'}</h1>
+          <button className="btn btn-danger sign-out-button" onClick={handleSignOut}>
+            Sign Out
           </button>
-        </div>
-        <h2>Uploaded Files</h2>
-        <ul className="file-list">
-          {files.map((file) => (
-            <li key={file.key} className="file-item">
-              {file.key} 
-              <button className="download-btn" onClick={() => downloadFile(file.key)}>
-                <FiDownload /> Download
-              </button>
-            </li>
-          ))}
-        </ul>
+        </header>
+        <main>
+          {view === 'files' ? (
+            <>
+              <FileUpload 
+                onUploadComplete={handleUploadComplete} 
+                currentPath={currentPath} 
+              />
+              <FileList 
+                refreshTrigger={refreshTrigger} 
+                currentPath={currentPath} 
+                onNavigate={handleNavigate} 
+              />
+            </>
+          ) : (
+            <Profile />
+          )}
+        </main>
       </div>
     </div>
   );
+}
+const components = {
+  Header() {
+    return (
+      <div className="text-center mb-4">
+      </div>
+    );
+  },
+  SignIn: {
+    Header() {
+      return (
+        <h4 className="text-center text-dark mb-4">
+          Sign in to your account
+        </h4>
+      );
+    },
+    Footer() {
+      return null;
+    },
+    Username(props) {
+      return (
+        <div className="mb-3">
+          <label htmlFor="username" className="form-label">Email</label>
+          <input
+            {...props}
+            id="username"
+            className="form-control"
+            placeholder="Enter your email"
+          />
+        </div>
+      );
+    },
+    Password(props) {
+      return (
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">Password</label>
+          <input
+            {...props}
+            id="password"
+            className="form-control"
+            placeholder="Enter your password"
+          />
+        </div>
+      );
+    },
+    Button(props) {
+      return (
+        <button
+          {...props}
+          className="btn btn-primary w-100"
+        >
+          Sign In
+        </button>
+      );
+    },
+  },
 };
 
-export default withAuthenticator(App, {
-  signUpAttributes: ['name', 'email', 'password']
-});
+export default withAuthenticator(App, { components });
