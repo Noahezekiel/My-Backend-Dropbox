@@ -1,22 +1,28 @@
-// Sidebar.js
-import React from "react";
-import { FiHome, FiFolder, FiSettings, FiLogOut } from "react-icons/fi";
-import "./Sidebar.css";
+import React from 'react';
+import './Sidebar.css';
 
-const Sidebar = ({ user, signOut }) => {
+function Sidebar({ currentView, setView }) {
   return (
     <div className="sidebar">
-      <h2>My Dropbox</h2>
-      <ul>
-        <li><FiHome /> Home</li>
-        <li><FiFolder /> Files</li>
-        <li><FiSettings /> Settings</li>
-      </ul>
-      <button className="logout-btn" onClick={signOut}>
-        <FiLogOut /> Logout
-      </button>
+      <div className="logo">
+        <h2>My Dropbox-Clone</h2>
+      </div>
+      <nav>
+        <button 
+          className={currentView === 'files' ? 'active' : ''} 
+          onClick={() => setView('files')}
+        >
+          <span className="icon">📁</span> Files
+        </button>
+        <button 
+          className={currentView === 'profile' ? 'active' : ''} 
+          onClick={() => setView('profile')}
+        >
+          <span className="icon">👤</span> Profile
+        </button>
+      </nav>
     </div>
   );
-};
+}
 
 export default Sidebar;
