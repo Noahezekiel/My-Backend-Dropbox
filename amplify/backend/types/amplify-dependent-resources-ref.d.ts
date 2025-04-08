@@ -1,6 +1,6 @@
 export type AmplifyDependentResourcesAttributes = {
   "auth": {
-    "mybackenddropbox379149b0": {
+    "mybackenddropboxbffd9712": {
       "AppClientID": "string",
       "AppClientIDWeb": "string",
       "IdentityPoolId": "string",
@@ -10,17 +10,20 @@ export type AmplifyDependentResourcesAttributes = {
       "UserPoolName": "string"
     }
   },
-  "function": {
-    "S3Trigger78ca200a": {
-      "Arn": "string",
-      "LambdaExecutionRole": "string",
-      "LambdaExecutionRoleArn": "string",
-      "Name": "string",
-      "Region": "string"
+  "hosting": {
+    "S3AndCloudFront": {
+      "CloudFrontDistributionID": "string",
+      "CloudFrontDomainName": "string",
+      "CloudFrontOriginAccessIdentity": "string",
+      "CloudFrontSecureURL": "string",
+      "HostingBucketName": "string",
+      "Region": "string",
+      "S3BucketSecureURL": "string",
+      "WebsiteURL": "string"
     }
   },
   "storage": {
-    "s361da179d": {
+    "s3966bf188": {
       "BucketName": "string",
       "Region": "string"
     }

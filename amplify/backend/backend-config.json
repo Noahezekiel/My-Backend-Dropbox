@@ -1,6 +1,6 @@
 {
   "auth": {
-    "mybackenddropbox379149b0": {
+    "mybackenddropboxbffd9712": {
       "customAuth": false,
       "dependsOn": [],
       "frontendAuthConfig": {
@@ -27,44 +27,15 @@
       "service": "Cognito"
     }
   },
-  "function": {
-    "S3Trigger78ca200a": {
-      "build": true,
+  "hosting": {
+    "S3AndCloudFront": {
       "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    }
-  },
-  "parameters": {
-    "AMPLIFY_function_S3Trigger78ca200a_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "S3Trigger78ca200a"
-        }
-      ]
-    },
-    "AMPLIFY_function_S3Trigger78ca200a_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "S3Trigger78ca200a"
-        }
-      ]
+      "service": "S3AndCloudFront"
     }
   },
   "storage": {
-    "s361da179d": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "Name",
-            "Arn",
-            "LambdaExecutionRole"
-          ],
-          "category": "function",
-          "resourceName": "S3Trigger78ca200a"
-        }
-      ],
+    "s3966bf188": {
+      "dependsOn": [],
       "providerPlugin": "awscloudformation",
       "service": "S3"
     }

@@ -1,0 +1,14 @@
+{
+  "resourceName": "s3966bf188",
+  "policyUUID": "966bf188",
+  "bucketName": "mybackenddropboxee172adab4654ca5b48c68437b8a52c",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

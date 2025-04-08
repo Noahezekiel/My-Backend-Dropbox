@@ -1,28 +1,25 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-mybackenddropbox-dev-f4d8d-authRole",
-      "UnauthRoleArn": "arn:aws:iam::127214162934:role/amplify-mybackenddropbox-dev-f4d8d-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::127214162934:role/amplify-mybackenddropbox-dev-f4d8d-authRole",
+      "AuthRoleName": "amplify-mybackenddropbox-dev-c1265-authRole",
+      "UnauthRoleArn": "arn:aws:iam::535002885853:role/amplify-mybackenddropbox-dev-c1265-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::535002885853:role/amplify-mybackenddropbox-dev-c1265-authRole",
       "Region": "eu-west-1",
-      "DeploymentBucketName": "amplify-mybackenddropbox-dev-f4d8d-deployment",
-      "UnauthRoleName": "amplify-mybackenddropbox-dev-f4d8d-unauthRole",
-      "StackName": "amplify-mybackenddropbox-dev-f4d8d",
-      "StackId": "arn:aws:cloudformation:eu-west-1:127214162934:stack/amplify-mybackenddropbox-dev-f4d8d/fe392670-10a2-11f0-aafb-02112a477e83",
-      "AmplifyAppId": "d1ck8tqf3jy4c5"
+      "DeploymentBucketName": "amplify-mybackenddropbox-dev-c1265-deployment",
+      "UnauthRoleName": "amplify-mybackenddropbox-dev-c1265-unauthRole",
+      "StackName": "amplify-mybackenddropbox-dev-c1265",
+      "StackId": "arn:aws:cloudformation:eu-west-1:535002885853:stack/amplify-mybackenddropbox-dev-c1265/3f5f54b0-1465-11f0-bb09-0258be158027",
+      "AmplifyAppId": "d1w2nufzegmb13"
     },
     "categories": {
       "auth": {
-        "mybackenddropbox379149b0": {}
-      },
-      "function": {
-        "S3Trigger78ca200a": {
-          "deploymentBucketName": "amplify-mybackenddropbox-dev-f4d8d-deployment",
-          "s3Key": "amplify-builds/S3Trigger78ca200a-55306b725a4444796759-build.zip"
-        }
+        "mybackenddropboxbffd9712": {}
       },
       "storage": {
-        "s361da179d": {}
+        "s3966bf188": {}
+      },
+      "hosting": {
+        "S3AndCloudFront": {}
       }
     }
   }

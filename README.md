@@ -33,3 +33,6 @@ npm start
 ## The Core Team
 Developer: Anong Haruna
 Developer: Noah Ezekiel
+
+Hosting
+URL: https://d1qaw3oquodtq6.cloudfront.net

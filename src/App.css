@@ -48,7 +48,7 @@ main {
 }
 
 [data-amplify-form] {
-  background: #ffffff;
+  background-color: #ffffff;
   padding: 40px;
   border: 1px solid #e6e9ef;
   border-radius: 4px;
@@ -79,4 +79,6 @@ main {
 [data-amplify-form] .form-control:focus {
   border-color: #0061ff;
   box-shadow: 0 0 0 0.2rem rgba(0, 97, 255, 0.25);
-}
+} 
+
+
